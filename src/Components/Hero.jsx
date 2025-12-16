@@ -63,6 +63,15 @@ const Hero = () => {
                 };
             } else {
                 // On mobile, just autoplay the video without scrubbing
+                let t1 = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "video",
+                        start: startValue,
+                        end: endValue,
+                        scrub: 1, // Changed from true to 1 for smoother scrubbing
+                        pin: true,
+                    },
+                }); 
                 videoRef.current.autoplay = true;
             }
     }, []);
