@@ -104,7 +104,7 @@ const Hero = () => {
          muted
          playsInline
          preload="auto"
-         src="/videos/output.mp4"
+         src="https://dshbruulynamy.cloudfront.net/output.mp4"
          />  
      </div>
 	</>
