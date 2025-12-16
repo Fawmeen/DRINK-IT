@@ -44,20 +44,27 @@ const Hero = () => {
             const startValue = isMobile ? 'top 50%': 'center 60%';
             const endValue = isMobile ? '120% top':'bottom top';
 
-            let t1 = gsap.timeline({
-                scrollTrigger: {
-                    trigger: "video",
-                    start: startValue,
-                    end: endValue,
-                    scrub: true,
-                    pin: true,
-                },
-            });
-            videoRef.current.onloadedmetadata = () => {
-                t1.to(videoRef.current, {
-                    currentTime: videoRef.current.duration,
+            // Disable video scrubbing on mobile due to performance issues
+            if (!isMobile) {
+                let t1 = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "video",
+                        start: startValue,
+                        end: endValue,
+                        scrub: 1, // Changed from true to 1 for smoother scrubbing
+                        pin: true,
+                    },
                 });
-            };
+                videoRef.current.onloadedmetadata = () => {
+                    t1.to(videoRef.current, {
+                        currentTime: videoRef.current.duration,
+                        ease: "none",
+                    });
+                };
+            } else {
+                // On mobile, just autoplay the video without scrubbing
+                videoRef.current.autoplay = true;
+            }
     }, []);
   return (
 	<>
@@ -103,7 +110,7 @@ const Hero = () => {
          ref={videoRef}
          muted
          playsInline
-         preload="auto"
+         preload="metadata"
          src="https://dshbruulynamy.cloudfront.net/output.mp4"
          />  
      </div>
